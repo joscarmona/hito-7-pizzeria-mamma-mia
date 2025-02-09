@@ -4,6 +4,7 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { CartContext } from "../context/CartContext"
+import { UserContext } from "../context/UserContext"
 
 /* FUNCIÓN PARA CALCULAR EL TOTAL A PAGAR */
 const total = (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count
@@ -18,7 +19,10 @@ const Navbar = () => {
     // -- LOGIN Y REGISTER
     // TOKEN = TRUE, INDICA QUE USUARIO ESTÁ LOGUEADO Y SE DEBEN MOSTRAR LAS OPCIONES:
     // -- PROFILE Y LOGOUT
-    const token = false
+    // const token = true
+    /* ****** UserContext ****** */
+    const {token, logout} = useContext(UserContext)
+    console.log("valor del token:", token)
 
     return(
         <nav className="navbar">
@@ -31,7 +35,8 @@ const Navbar = () => {
                     <Link to="/" className="link-opcion" >&#x1F355; Home</Link>
                     {/* <a href="" className="link-opcion" >&#x1F355; Home</a> */}
                     {/* SE RENDERIZA LAS OPCIONES DE USUARIO SEGÚN CORRESPONDA */}
-                    {token ? <UsarioLogueado /> : <UsarioNoLogueado />}
+                    {token ? <UsarioLogueado logout={logout}/> : <UsarioNoLogueado />}
+
                 </div>
             </article>
             {/* PRECIO TOTAL DE LOS PRODUCTOS AGREGADOS AL CARRO */}
@@ -52,7 +57,7 @@ export default Navbar
 
 /* COMPONENTES UTILIZADOS PARA RENDERIZAR LAS OPCIONES DE USUARIO CUANDO SE ENCUENTRA LOGUEADO O NO */
 //RENDERIZA OPCIONES DE USUARIO LOGUEADO
-const UsarioLogueado = () =>{
+const UsarioLogueado = ({logout}) =>{
     return(
         <>
             {/* UTF-8 EMOJI OPEN LOCK: &#128275; */}
@@ -60,7 +65,7 @@ const UsarioLogueado = () =>{
             <Link to="/profile" className="link-opcion" >&#128275; Profile</Link>
             {/* UTF-8 EMOJI LOCK: &#128274; */}
             {/* <a href="" className="link-opcion" >&#128274; Logout</a> */}
-            <button className="buttonLogoutNavbar" >&#128274; Logout</button>
+            <button onClick={logout} className="buttonLogoutNavbar">&#128274; Logout</button>
         </>
     )
 }

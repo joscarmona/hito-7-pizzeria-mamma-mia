@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 // import { pizzaCart } from "../pizzas"
 import { CartContext } from "../context/CartContext"
+import { UserContext } from "../context/UserContext"
 
 /* FUNCIÓN PARA CALCULAR EL TOTAL A PAGAR */
 const total = (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count
@@ -51,6 +52,9 @@ const incPizzaCount = (cartLocal, setCartLocal, pizza, cart, setCart) => {
 const Cart = () => {
     /* Acceso estado cart y setter setCart definido en Context - Provider CartContext.jsx */
     const {cart, setCart} = useContext(CartContext)
+
+    /* ****** UserContext ****** */
+    const {token} = useContext(UserContext)
 
     /* ESTADO PARA MANIPULAR EL ARREGLO DE PIZZAS EN EL CARRITO DE COMPRAS */
     // const [cartLocal, setCartLocal] = useState(pizzaCart)
@@ -107,7 +111,8 @@ const Cart = () => {
                     }
                 </h2>
                 {/* IR A PAGAR */}
-                <button className="button-add-carro">Pagar</button>
+                {token && <button className="button-add-carro">Pagar</button>}
+                
 
             </section>
         </main>

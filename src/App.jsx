@@ -13,34 +13,40 @@ import NotFound from './pages/NotFound'
 /* COMPONENTES Routes & Route */
 import { Navigate, Route, Routes } from 'react-router-dom'
 import CartProvider from './context/CartContext'
+import UserProvider, { UserContext } from './context/UserContext'
+import { useContext } from 'react'
 
 function App() {
+  /* ****** UserContext ****** */
+  const {token} = useContext(UserContext)
   return (
     <section className="layout">
       {/* SIEMPRE SE MOSTRARAN LOS COMPONENTES NAVBAR & FOOTER */}
-      <CartProvider>
-        {/* *** Navbar *** */}
-        <Navbar />
-        {/* RUTAS */}
-        <Routes>
-          {/* *** Home *** */}
-          <Route path='/' element={<Home />} />
-          {/* *** RegisterPage *** */}
-          <Route path='/register' element={<RegisterPage />} />
-          {/* *** LoginPage *** */}
-          <Route path='/login' element={<LoginPage />} />
-          {/* *** Cart *** */}
-          <Route path='/cart' element={<Cart />} />
-          {/* *** Pizza *** */}
-          <Route path='/pizza/p001' element={<Pizza />} />
-          {/* *** ProfilePage *** */}
-          <Route path='/profile' element={<ProfilePage /> } />
-          {/* *** NotFound *** */}
-          <Route path='/404' element={<NotFound />} />
-          {/* El componente Navigate permite redireccionar una ruta */}
-          <Route path='*' element={<Navigate to="/404" />} />
-        </Routes>
-      </CartProvider>
+      
+          {/* *** Navbar *** */}
+          <Navbar />
+          {/* RUTAS */}
+          <Routes>
+            {/* *** Home *** */}
+            <Route path='/' element={<Home />} />
+            {/* *** RegisterPage *** */}
+            <Route path='/register' element={!token ? <RegisterPage /> : <Navigate to='/' />} />
+            {/* *** LoginPage *** */}
+            <Route path='/login' element={!token ? <LoginPage /> : <Navigate to='/' />} />
+            {/* *** Cart *** */}
+            <Route path='/cart' element={<Cart />} />
+            {/* *** Pizza *** */}
+            {/* <Route path='/pizza/p001' element={<Pizza />} /> */}
+            <Route path='/pizza/:id' element={<Pizza />} />
+            {/* *** ProfilePage *** */}
+            {/* <Route path='/profile' element={<ProfilePage /> } /> */}
+            <Route path='/profile' element={token ? <ProfilePage /> : <Navigate to='/login' />} />
+            {/* *** NotFound *** */}
+            {/* <Route path='/404' element={<NotFound />} /> */}
+            {/* El componente Navigate permite redireccionar una ruta */}
+            {/* <Route path='*' element={<Navigate to="/404" />} /> */}
+            <Route path='*' />
+          </Routes>
       {/* *** Footer *** */}
       <Footer />      
     </section>

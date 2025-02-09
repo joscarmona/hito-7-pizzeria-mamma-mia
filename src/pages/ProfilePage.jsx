@@ -11,7 +11,7 @@ const ProfilePage = () => {
                 <h1 className="h1UserProfile">Perfil de usuario</h1>
                 <article className="userInfoContainer">
                     <p>usuario@email.com</p>
-                    <button className="logout">Cerrar sesión</button>
+                    {/* <button className="logout">Cerrar sesión</button> */}
                 </article>
             </section>
         </main>

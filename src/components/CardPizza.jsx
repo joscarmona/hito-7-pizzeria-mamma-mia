@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { CartContext } from "../context/CartContext"
+import { Link } from "react-router-dom"
 
 /* ************************************************************ */
 /* ************************* CardPizza ************************ */
@@ -111,7 +112,9 @@ const CardPizza = ({producto}) => {
                     <div className="buttons">
                         {/* VER MÁS */}
                         {/* UTF-8 EMOJI EYES: &#128064; */}
-                        <button className="button-ver-mas">Ver más &#128064;</button>
+                        <Link to={`pizza/${id}`}>
+                            <button className="button-ver-mas">Ver más &#128064;</button>
+                        </Link>
                         {/* AÑADIR AL CARRO DE COMPRAS */}
                         {/* UTF-8 EMOJI SHOPPING CART: &#128722; */}
                         <button className="button-add-carro" onClick={addPizzaToCart}>Añadir &#128722;</button>

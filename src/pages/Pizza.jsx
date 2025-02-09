@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom";
 
 
 /* PARA CONSULTAR A LA API POR PIZZAS POR LA INFORMACIÓN DE LA PIZZA */
-const getPizza = async (setPizza, setMyError) => {
+const getPizza = async (setPizza, setMyError,id) => {
     try {
         /* ENPOINT DE LA API PIZZAS */
-        const url = "http://localhost:5000/api/pizzas/p001"
+        const url = `http://localhost:5000/api/pizzas/${id}`
         const response = await fetch(url)
         // console.log(response)
         if (!response.ok) { // SE CONSULTA POR EL PROPIEDAD ok DE response
@@ -29,19 +30,20 @@ const getPizza = async (setPizza, setMyError) => {
 }
 
 /************************************************************** */
-/* *********** COMPONENTE CART (CARRITO DE COMPRAS) *********** */
+/* ********************* COMPONENTE PIZZA ********************* */
 /************************************************************** */
 const Pizza = () => {
     /* GUARDAR LA CONSULTA REALIZADA LA API DE PIZZAS POR LA INFORMACIÓN DE LA PIZZA*/
     const [pizza, setPizza] = useState({})
     const [myError, setMyError] = useState("")
+    const {id} = useParams()
 
     /* useEffect, SE CONSULTA A LA API CUANDO EL COMPONENTE PIZZA SE MONTA EN App.jsx */
     useEffect(() => {
-        getPizza(setPizza, setMyError)
+        getPizza(setPizza, setMyError, id)
     }, [])
 
-    const {img, name, desc, ingredients, price, id} = pizza
+    const {img, name, desc, ingredients, price} = pizza
 
     return (
         <main className="main-section">
